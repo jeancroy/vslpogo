@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VSL Raid Path Planing</title>
+
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+
+
+    <script>
+
+        var gym_list = [
+            {
+                "id": 2620950,
+                "text": "Bibliotheque Saint-laurent",
+                "lat": 45.512484,
+                "lng": -73.676878,
+                "zone": 1,
+                "elligible": 0
+            },
+            {
+                "id": 2620960,
+                "text": "Vanier College",
+                "lat": 45.514306,
+                "lng": -73.676289,
+                "zone": 1,
+                "elligible": 0
+            },
+            {
+                "id": 2613952,
+                "text": "Église De Saint-Laurent",
+                "lat": 45.513951,
+                "lng": -73.674971,
+                "zone": 1,
+                "elligible": 0
+            },
+            {
+                "id": 2613946,
+                "text": "Orelio San Donato",
+                "lat": 45.512372,
+                "lng": -73.673236,
+                "zone": 1,
+                "elligible": 0
+            },
+            {
+                "id": 2613944,
+                "text": "Fontaine Cegep Saint-Laurent",
+                "lat": 45.512186,
+                "lng": -73.672697,
+                "zone": 1,
+                "elligible": 0
+            },
+            {
+                "id": 2620936,
+                "text": "Cote Vertu Metro Station",
+                "lat": 45.51423,
+                "lng": -73.683034,
+                "zone": 2,
+                "elligible": 0
+            },
+            {
+                "id": 2620923,
+                "text": "Saint-Laurent Post Office",
+                "lat": 45.51324,
+                "lng": -73.681465,
+                "zone": 2,
+                "elligible": 0
+            },
+            {
+                "id": 2620966,
+                "text": "Mural Art - Saint-Laurent",
+                "lat": 45.512364,
+                "lng": -73.67941,
+                "zone": 2,
+                "elligible": 0
+            },
+            {
+                "id": 2620968,
+                "text": "Murale De OMEN",
+                "lat": 45.51046,
+                "lng": -73.677309,
+                "zone": 2,
+                "elligible": 0
+            },
+            {
+                "id": 2613955,
+                "text": "du collège métro - south exit",
+                "lat": 45.508879,
+                "lng": -73.672573,
+                "zone": 2,
+                "elligible": 0
+            },
+            {
+                "id": 2620919,
+                "text": "Church",
+                "lat": 45.508756,
+                "lng": -73.685149,
+                "zone": 3,
+                "elligible": 0
+            },
+            {
+                "id": 2616018,
+                "text": "Eglise Saint-Sixte",
+                "lat": 45.507468,
+                "lng": -73.684404,
+                "zone": 3,
+                "elligible": 0
+            },
+            {
+                "id": 2616015,
+                "text": "Gohier Park**",
+                "lat": 45.507304,
+                "lng": -73.681235,
+                "zone": 3,
+                "elligible": 2
+            },
+            {
+                "id": 2620667,
+                "text": "Parc Poirier*",
+                "lat": 45.514065,
+                "lng": -73.663302,
+                "zone": 4,
+                "elligible": 1
+            },
+            {
+                "id": 2620633,
+                "text": "Peoples Memorial Plaque",
+                "lat": 45.508393,
+                "lng": -73.66317,
+                "zone": 4,
+                "elligible": 0
+            },
+            {
+                "id": 2620663,
+                "text": "Garden  Water Fountain",
+                "lat": 45.508884,
+                "lng": -73.660634,
+                "zone": 4,
+                "elligible": 0
+            },
+            {
+                "id": 2620652,
+                "text": "Isabel park",
+                "lat": 45.512337,
+                "lng": -73.656921,
+                "zone": 4,
+                "elligible": 0
+            },
+            {
+                "id": 2987714,
+                "text": "Fountain Alexis Nihon Park",
+                "lat": 45.4976,
+                "lng": -73.689146,
+                "zone": 5,
+                "elligible": 0
+            },
+            {
+                "id": 2988881,
+                "text": "Parc Gold**",
+                "lat": 45.500999,
+                "lng": -73.685807,
+                "zone": 5,
+                "elligible": 2
+            },
+            {
+                "id": 2987593,
+                "text": "Netivot Synagogue (Ward)",
+                "lat": 45.498338,
+                "lng": -73.678675,
+                "zone": 5,
+                "elligible": 0
+            },
+            {
+                "id": 2989018,
+                "text": "Place Cote Vertu Post Office",
+                "lat": 45.499643,
+                "lng": -73.706313,
+                "zone": 6,
+                "elligible": 0
+            },
+            {
+                "id": 2989021,
+                "text": "Giant Hopscotch",
+                "lat": 45.494122,
+                "lng": -73.704574,
+                "zone": 6,
+                "elligible": 0
+            },
+            {
+                "id": 2613992,
+                "text": "Bibliotheque Du Boise**",
+                "lat": 45.505003,
+                "lng": -73.703386,
+                "zone": 6,
+                "elligible": 2
+            },
+            {
+                "id": 2621083,
+                "text": "Parc Marcel-Laurin**",
+                "lat": 45.509516,
+                "lng": -73.697842,
+                "zone": 6,
+                "elligible": 2
+            },
+            {
+                "id": 1730769,
+                "text": "Bois-Franc Pergola*",
+                "lat": 45.513117,
+                "lng": -73.718948,
+                "zone": 7,
+                "elligible": 1
+            },
+            {
+                "id": 2989022,
+                "text": "Square de la sterne arctique",
+                "lat": 45.5136979,
+                "lng": -73.7155523,
+                "zone": 7,
+                "elligible": 0
+            },
+            {
+                "id": 1730774,
+                "text": "Fontaine Rue de l'Écu*",
+                "lat": 45.50995,
+                "lng": -73.71515,
+                "zone": 7,
+                "elligible": 1
+            },
+            {
+                "id": 2621383,
+                "text": "Place des Nations",
+                "lat": 45.513083,
+                "lng": -73.711599,
+                "zone": 7,
+                "elligible": 0
+            },
+            {
+                "id": 2621104,
+                "text": "Square Gauguin",
+                "lat": 45.5115206,
+                "lng": -73.7080586,
+                "zone": 7,
+                "elligible": 0
+            },
+            {
+                "id": 2621103,
+                "text": "Bois-Franc Gazebo*",
+                "lat": 45.509715,
+                "lng": -73.707561,
+                "zone": 7,
+                "elligible": 1
+            },
+            {
+                "id": 2616093,
+                "text": "Gare Bois Franc",
+                "lat": 45.522989,
+                "lng": -73.709815,
+                "zone": 8,
+                "elligible": 0
+            },
+            {
+                "id": 2616090,
+                "text": "Parc Goulet**",
+                "lat": 45.521946,
+                "lng": -73.701797,
+                "zone": 8,
+                "elligible": 2
+            },
+            {
+                "id": 2616052,
+                "text": "7th Day Adventist Church",
+                "lat": 45.520947,
+                "lng": -73.69517,
+                "zone": 8,
+                "elligible": 0
+            },
+            {
+                "id": 2616057,
+                "text": "United Pentecostal Church",
+                "lat": 45.522635,
+                "lng": -73.691772,
+                "zone": 8,
+                "elligible": 0
+            },
+            {
+                "id": 2621226,
+                "text": "Église Alliance Vietnamienne",
+                "lat": 45.519282,
+                "lng": -73.687216,
+                "zone": 8,
+                "elligible": 0
+            },
+            {
+                "id": 2613997,
+                "text": "Parc Saint-Laurent*",
+                "lat": 45.527285,
+                "lng": -73.686836,
+                "zone": 9,
+                "elligible": 1
+            },
+            {
+                "id": 2613998,
+                "text": "Painter Park Triple Net",
+                "lat": 45.528582,
+                "lng": -73.676597,
+                "zone": 9,
+                "elligible": 0
+            },
+            {
+                "id": 2615973,
+                "text": "Caron Parc Fountain**",
+                "lat": 45.520517,
+                "lng": -73.672095,
+                "zone": 9,
+                "elligible": 2
+            },
+            {
+                "id": 2615947,
+                "text": "Montpellier Train Station",
+                "lat": 45.524821,
+                "lng": -73.67177,
+                "zone": 9,
+                "elligible": 0
+            }
+        ];
+
+        var gym_dict = {};
+
+        var zone_list = [
+
+            {"id": "", "text": ""},
+            {"id": 0, "text": "Current Position"},
+
+            {"id": 1, "text": "Avenue Sainte-Croix", "children": []},
+            {"id": 2, "text": "Décarie", "children": []},
+            {"id": 3, "text": "Marcel Laurent", "children": []},
+            {"id": 4, "text": "Cimetière + Poirier", "children": []},
+            {"id": 5, "text": "Boul Alexis-Nihon ", "children": []},
+            {"id": 6, "text": "Boul Thimens", "children": []},
+            {"id": 7, "text": "Bois franc", "children": []},
+            {"id": 8, "text": "Goulet", "children": []},
+            {"id": 9, "text": "Muir", "children": []}
+        ];
+
+        var zone_dict = {};
+
+
+        function init_gym() {
+
+            var i;
+
+            for (i = 0; i < zone_list.length; i++) {
+                var zone_item = zone_list[i];
+                zone_dict[zone_item.id] = zone_item;
+            }
+
+            for (i = 0; i < gym_list.length; i++) {
+                var gym_item = gym_list[i];
+
+                // Debug duplicate.
+                if(gym_dict[gym_item.id]!=null){
+                    console.log("duplicate:" ,  gym_item,  gym_dict[gym_item.id])
+                }
+
+                gym_dict[gym_item.id] = gym_item;
+
+                var zone = zone_dict[gym_item.zone];
+                if (zone != null) {
+                    zone.children.push(gym_item)
+                }
+            }
+
+        }
+
+        init_gym();
+
+
+    </script>
+
+    <style>
+
+
+        .select2-selection__rendered {
+            line-height: 31px !important;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 35px !important;
+        }
+
+        .select2-selection__arrow {
+            height: 34px !important;
+        }
+
+        .elligible_2 {
+            font-weight: bold;
+        }
+
+        .elligible_1 {
+            font-style: italic;
+        }
+
+        .waypoint-group {
+            display: block;
+            float: left;
+            margin:5px;
+            height: 140px;
+            width: 230px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .waypoint-check {
+            padding: 5px;
+            margin: 1px;
+            white-space: nowrap;
+            vertical-align: top
+        }
+
+        .waypoint-check div{
+            display: inline-block;
+            white-space: normal;
+        }
+
+        .cf::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .fl {
+            float: left;
+        }
+
+        .w100{
+            width:100%;
+        }
+
+        .w80{
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .center{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .relative{
+            position: relative;
+        }
+
+        .w50{
+            width: 50%;
+            max-width: 400px;
+        }
+
+        .m20{
+            margin:20px;
+        }
+
+
+
+    </style>
+
+
+</head>
+<body>
+
+<div class="cf w100">
+
+    <div class="fl w50 m20">
+        <h3>Start Point</h3>
+        <select id="start" class="zselect w100"></select>
+    </div>
+
+    <div class="fl w50 m20">
+        <h3>End Point</h3>
+        <select id="end" class="zselect w100"></select>
+    </div>
+
+</div>
+
+<h3>WayPoints</h3>
+<p>Select Up to 23 other stops, (* = ex elligible, ** = often triggered)</p>
+
+<div id="waypoints" class="cf"></div>
+<br><br>
+
+<div class="w100 relative">
+<button id="submit" class="w80 center"> Compute Path </button>
+</div>
+
+<br>
+<div id="map" style="width:100%;height: 600px"></div>
+
+<br>
+<div id="directions-panel" style="width:100%;margin:50px"></div>
+
+
+
+
+<script>
+
+    function select_cb(){
+
+        // GPS
+        if ($(this).val() === "0") {
+            try_get_position()
+        }
+
+        // Update Marker End
+        var $el_end = $("#end");
+        set_marker_off( $el_end.data("last"));
+        set_marker_on($el_end.val());
+        $el_end.data("last", $el_end.val());
+
+        // Update Marker Start
+        var $el_start = $("#start");
+        set_marker_off($el_start.data("last"));
+        set_marker_on($el_start.val());
+        $el_start.data("last", $el_start.val());
+
+
+    }
+
+    // Init
+    $("#end").select2({data: zone_list, allowClear: true, placeholder: "End"})
+        .on("change", select_cb);
+
+    $("#start").select2({data: zone_list, allowClear: true, placeholder: "Start"})
+        .on("change", select_cb)
+        .on("change", function () {
+           // Copy start to finish.
+            var chosen = $(this).val();
+            $("#end").val(chosen).trigger("change");
+
+        });
+
+    // Fill gym list
+
+    function populate_waypoints() {
+
+        var waypoints_root = $("#waypoints");
+        for (var i = 0; i < zone_list.length; i++) {
+
+            var zone_item = zone_list[i];
+
+            if (zone_item == null || zone_item.id === "" || zone_item.id === 0) continue;
+            if (zone_item.children == null || zone_item.children.length === 0) continue;
+
+            var container = $("<div class='waypoint-group'></div>").appendTo(waypoints_root);
+            var title = $("<strong class='waypoint-group-title'>" + zone_item.text + "</strong>").appendTo(container);
+            var list = $("<ul></ul>").appendTo(container);
+            var children = zone_item.children;
+
+            for (var j = 0; j < children.length; j++) {
+                var child = children[j];
+                if (child == null || child.id == null || child.text == null) continue;
+                $("<li><label class='waypoint-check elligible_" + child.elligible + "'><input type='checkbox' data-id='" + child.id + "'/><div>" + child.text + "</div></label></li>").appendTo(list)
+            }
+
+        }
+
+    }
+
+    populate_waypoints();
+
+
+    // Deal with user position
+
+    var user_position = null;
+    var user_position_marker = null;
+
+
+    function try_get_position() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(get_position_callback);
+        } else {
+            err_position_callback()
+        }
+    }
+
+    function get_position_callback(position) {
+        console.log(position);
+        if (position.coords != null) {
+            user_position = {lat: position.coords.latitude, lng: position.coords.longitude};
+        }
+        if($("#start").val()==="0" || $("#end").val()==="0"){
+            set_marker_on("0");
+        }
+    }
+
+    function err_position_callback() {
+        $("#start").val(null).trigger("change");
+        $("#end").val(null).trigger("change");
+    }
+
+
+</script>
+
+<script>
+
+    var global_map = null;
+
+    function initMap() {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: {lat: 45.510086, lng: -73.686712}
+        });
+
+
+        directionsDisplay.setMap(map);
+        global_map = map;
+
+        document.getElementById('submit').addEventListener('click', function () {
+            calculateAndDisplayRoute(directionsService, directionsDisplay);
+        });
+
+    }
+
+    function set_marker_on(id){
+
+        if(id==null) return;
+
+        // Try to find map
+        if(global_map==null) return;
+
+        if(id==="0"){
+
+            if(user_position==null) return;
+            if(user_position_marker==null){
+                user_position_marker =  new google.maps.Marker({
+                    position: user_position,
+                    title: "Current Position"
+                });
+            }
+            user_position_marker.setMap(global_map);
+            return ;
+        }
+
+        // Try to find gym;
+        var gym_item = gym_dict[id];
+        if(gym_item==null) return;
+
+        // Do we have a marker object ?
+        var marker = gym_item.omarker;
+        if(marker == null){
+
+            // Create and save
+            marker =  new google.maps.Marker({
+                position: gym_item, // gym item has "lat" and "lng" property.
+                title: gym_item.text
+            });
+            gym_item.omarker = marker;
+        }
+
+        // Attach to the map to show it.
+        marker.setMap(global_map);
+
+    }
+
+    function set_marker_off(id){
+
+        if(id==null) return;
+
+        // Try to find map
+        if(global_map==null) return;
+
+        if(id==="0"){
+            if(user_position_marker !=null){
+                user_position_marker.setMap(null);
+                return ;
+            }
+        }
+
+        // Try to find gym;
+        var gym_item = gym_dict[id];
+        if(gym_item==null) return;
+
+        // Do we have a marker object ?
+        var marker = gym_item.omarker;
+
+        // Remove from map
+        if(marker != null){
+            marker.setMap(null);
+        }
+
+    }
+
+    $(".waypoint-check input").on("change",function(){
+        var $el = $(this);
+        if($el.is(":checked")){
+            set_marker_on($el.data("id"));
+        }else{
+            set_marker_off($el.data("id"));
+        }
+    });
+
+
+    function render_ininary_item(id,index, distance, time){
+        var gym_item = id==="0"?{text:"Current Position"}:gym_dict[id];
+        var name = gym_item!= null ?gym_item.text:id;
+        var travelInfo = distance!=null ? "(travel: "+time+", "+distance+")":"";
+        var chr = String.fromCharCode(65 + index);
+        return "<div><strong>" +chr+ ": "+ name + "</strong>  " + travelInfo+ "</div>";
+    }
+
+
+
+    function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+
+        var waypts = [];
+        var waypoints_ids = [];
+
+        var checkboxArray = $(".waypoint-check input");
+
+        for (var i = 0; i < checkboxArray.length; i++) {
+
+            var $chk = $(checkboxArray[i]);
+            if ($chk.is(":checked")) {
+                var gym_item = gym_dict[$chk.data("id")];
+                if(gym_item!=null){
+
+                    waypts.push({
+                        location: {lat:gym_item.lat,lng:gym_item.lng},
+                        stopover: true
+                    });
+
+                    waypoints_ids.push(gym_item.id);
+
+                }
+
+            }
+
+        }
+
+        var startid = $("#start").val();
+        var startloc = null;
+        if(startid===""){
+            alert("Please select starting point");
+            return;
+        }
+        else if(startid==="0"){
+            startloc = user_position;
+        }
+        else{
+            var start_gym = gym_dict[startid];
+            if(start_gym != null){
+                startloc = {lat:start_gym.lat,lng:start_gym.lng}
+            }else{
+                alert("Invalid starting point");
+                return;
+            }
+        }
+
+        var endid = $("#end").val();
+        var endloc = null;
+        if(endid===""){
+            alert("Please select ending point");
+            return;
+        }
+        else if(endid==="0"){
+            endloc = user_position;
+        }
+        else{
+            var end_gym = gym_dict[endid];
+            if(end_gym != null){
+                endloc = {lat:end_gym.lat,lng:end_gym.lng}
+            }else{
+                alert("Invalid ending point");
+                return;
+            }
+        }
+
+
+        //Clear All markers.
+        for (var j = 0; j < gym_list.length; j++) {
+            gym_item = gym_list[j];
+            if(gym_item.omarker != null){
+                gym_item.omarker.setMap(null)
+            }
+        }
+
+        //Clear current position if set
+        set_marker_off("0");
+
+
+
+        directionsService.route({
+                origin: startloc,
+                destination: endloc,
+                waypoints: waypts,
+                optimizeWaypoints: (waypts.length > 1),
+                travelMode: 'DRIVING'
+            },
+
+            function (response, status) {
+                if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+
+                    var route = response.routes[0];
+                    var routeSegment = 0;
+                    var legid;
+                    console.log(route);
+
+                    var summaryPanel = $('#directions-panel');
+                    summaryPanel.html("");
+                    summaryPanel.append($(render_ininary_item(startid, routeSegment)));
+
+                    // For each route, display summary information.
+                     for (var i = 0; i < route.legs.length; i++) {
+                         routeSegment = i + 1;
+
+                         //Recover id from ordered waypoint
+                         legid = route.waypoint_order[i];
+                         legid = legid == null ?"":waypoints_ids[legid];
+
+                         // Special case for last
+                         if(routeSegment === route.legs.length){
+                             legid = endid;
+                         }
+
+                         var distance_text = route.legs[i].distance.text;
+                         var duration_text = route.legs[i].duration.text;
+                         summaryPanel.append($(render_ininary_item(legid,routeSegment, distance_text, duration_text )));
+                     }
+
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+    }
+
+
+</script>
+
+
+<script async="" defer=""
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtTYKKYdZPPQv8yUuWINUxhLuZSZ3sLMQ&amp;callback=initMap"></script>
+
+</body>
+</html>
