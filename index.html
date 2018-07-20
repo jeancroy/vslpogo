@@ -526,6 +526,23 @@
 
 </div>
 
+<div class="cf w100">
+
+    <div class="fl w50 m20">
+        <h3>Travel Mode</h3>
+        <select id="mode" class="zselect w100">
+            <option value="DRIVING">Driving</option>
+            <option value="WALKING">Walking</option>
+            <option value="BICYCLING">Bicycling</option>
+            <!--option value="TRANSIT">Transit</option-->
+        </select>
+    </div>
+
+</div>
+
+
+
+
 <h3>WayPoints</h3>
 <p>Select Up to 23 other stops, (* = ex elligible, ** = often triggered)</p>
 
@@ -581,6 +598,8 @@
             $("#end").val(chosen).trigger("change");
 
         });
+
+    $("#mode").select2()
 
     // Fill gym list
 
@@ -840,7 +859,7 @@
                 destination: endloc,
                 waypoints: waypts,
                 optimizeWaypoints: (waypts.length > 1),
-                travelMode: 'DRIVING'
+                travelMode: $("#mode").val() //'DRIVING'
             },
 
             function (response, status) {
